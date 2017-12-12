@@ -36,3 +36,9 @@ y<-matrix(c(1,2,3,4,5,6),nrow=3)
 [2,]    2    5
 [3,]    1   12
 #对矩阵赋值
+#apply函数可以允许在矩阵各行上调用制定函数
+xdy4<-function(x,fargs){
+  a<-c(x[1:fargs])
+  b<-c()
+  ifelse(mean(a)>=0.5,b<-c(b,1),b<-c(b,0))
+  return(b)}
