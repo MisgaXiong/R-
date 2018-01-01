@@ -42,3 +42,54 @@ xdy4<-function(x,fargs){
   b<-c()
   ifelse(mean(a)>=0.5,b<-c(b,1),b<-c(b,0))
   return(b)}
+
+寻找异常值，例如寻找一个矩阵中每个行或者每个列中偏离观测值最大的值，一般我们规定偏离平均数最大的值，我的思路是将该矩阵的每个行或者列单独提取然后生成每行
+或列偏离平均值之差的绝对值向量，判断这个向量中谁最大，把这个索引返回原矩阵即可找到异常值
+xdy5<-function(x){
+  a<-NULL
+  d<-NULL
+  b<-NULL
+  v<-NULL
+  k<-mean(x)
+  for(i in 1:length(x)){
+    b<-c(b,abs(x[i]-k))}
+  v<-max(b)
+  for(i in 1:length(b)){
+    ifelse((abs(b[i])==v),a<-i,d<-c(i,d))
+  }
+  return(x[a])}
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
