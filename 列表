@@ -1,0 +1,72 @@
+列表是一种特殊的向量，不同之前的向量。之前的向量可以理解为原子型，列表中可以保存为不同格式的数据。可以是字符串型、数值型等。
+j<-list(name="joe",salary=55000,union=T)
+j
+$name
+[1] "joe"
+
+$salary
+[1] 55000
+
+$union
+[1] TRUE
+
+j[2]
+$salary
+[1] 55000
+
+j$salary
+[1] 55000
+
+ j[[2]]
+[1] 55000
+
+增加或者删除
+z<-list(a="abc",b=12)
+> z
+$a
+[1] "abc"
+
+$b
+[1] 12
+
+ z$c<-"salary"
+> z
+$a
+[1] "abc"
+
+$b
+[1] 12
+
+$c
+[1] "salary"
+
+z[-2]
+$a
+[1] "abc"
+
+$c
+[1] "salary"
+
+z$c<-NULL
+> z
+$a
+[1] "abc"
+
+$b
+[1] 12
+
+因为列表属于一种特殊向量，所以列表的长度也可以用length()计算
+列题：计算文本文件中的英文单词位置，并输出。在初学者不了解scan函数的情况下，可以使用read.table函数，但是read.table读取文件需要保证每行的列相同。
+This is the first time I study the R program for list. 1 2 3
+以上英文是文本文件
+
+k<-read.table("listwords.txt",sep = " ",stringsAsFactors = FALSE)
+k<-as.list(k)
+searchwd<-function(x){
+  for(i in 1:length(x)){
+    ifelse(mode(x[[i]])=="character",a<-c(a,i),a<-c(a))
+  }
+  return(a)
+}
+ searchwd(k)
+ [1]  1  2  3  1  2  3  4  5  6  7  8  9 10 11 12
