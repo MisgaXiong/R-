@@ -82,7 +82,52 @@ searchwd<-function(x){
 [1] 27
  lapply函数对列表中的每一个组件使用函数并返回列表值，sapply函数则返回向量或者矩阵值
  
- 
+ 计算核酸序列中碱基含量的小程序
+ th<-function(x){
+  l<-c()
+  for(i in 1:length(x)){
+    l<-paste(l,x[i],sep = "")
+  }
+  return(l)
+}
+
+tj<-function(x){
+  l<-substring(x,1:nchar(x),1:nchar(x))
+  q<-c()
+  w<-c()
+  e<-c()
+  r<-c()
+  for(i in 1:length(l)){
+    if(l[i]=="A"){
+      q<-c(q,i)}
+    else if(l[i]=="T"){
+      w<-c(w,i)}
+    else if(l[i]=="C"){
+      e<-c(e,i)}
+    else if(l[i]=="G"){
+      r<-c(r,i)}
+  }
+  a<-length(q)/length(l)
+  b<-length(w)/length(l)
+  c<-length(e)/length(l)
+  r<-length(r)/length(l)
+  f<-list(A=a, T=b, C=c, G=r)
+  return(f)
+  }
+  从NCBI下载TCF4的FASTA序列
+  k<-scan("seq.txt", what="character", sep=" ")
+  tj(th(k))
+$A
+[1] 0.2978877
+
+$T
+[1] 0.3019683
+
+$C
+[1] 0.1911906
+
+$G
+[1] 0.2089534
  
  
  
