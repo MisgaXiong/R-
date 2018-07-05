@@ -1,0 +1,107 @@
+a<-c("apple","pen")
+b<-c(17,14)
+c<-data.frame(a,b,stringsAsFactors = F) #创建一个简单的数据框
+c
+      a  b
+1 apple 17
+2   pen 14
+
+ class(c)
+[1] "data.frame"
+mode(c)
+[1] "list"
+使用c[[1]], c[,1],c$a均可访问c的第一列
+
+exam
+  exam1 exam2 quiz
+1   2.0   3.3  4.0
+2   3.3   2.0  3.7
+3   4.0   4.0  4.0
+4   2.3   0.0  3.3
+5   2.3   1.0  3.3
+6   3.3   3.7  4.0
+
+exam<-read.table("exam.txt",header = T,sep = "\t") #对考试成绩的数据框进行简单线性回归分析
+exam<-as.data.frame(exam)
+x<-exam$exam1
+y<-exam$exam2
+lm(y~x)
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+     -1.025        1.171  
+
+exam[1:3,2:3,drop=FALSE] #提取数据框子集，drop=FALSE可以保证在提取过程中不会把子集变成向量类型，保留数据框类型
+
+exam[exam$exam1>=3,] #要筛选出exam1的成绩大于等于3的学生
+  exam1 exam2 quiz
+2   3.3   2.0  3.7
+3   4.0   4.0  4.0
+6   3.3   3.7  4.0
+
+#如果要筛选出exam1, exam2, quiz的成绩都大于等于3的学生可以使用以下方法
+a<-NULL
+for(i in 1:nrow(exam)){
+  if(all(exam[i,]>=3)){a<-rbind(a,exam[i,])}
+     else{a<-rbind(a)}
+}
+a
+  exam1 exam2 quiz
+3   4.0   4.0    4
+6   3.3   3.7    4
+
+#使用subset函数多条件查询也可以快速解决上述问题
+subset(exam,exam1>=3 & exam2>=3 & quiz>=3)
+  exam1 exam2 quiz
+3   4.0   4.0    4
+6   3.3   3.7    4
+subset(exam,exam1>=3 & exam2>=3 & quiz>=3,select=c(exam2,quiz))#多条件查询制定显示列
+  exam2 quiz
+3   4.0    4
+6   3.7    4
+#在去NA值的情况下一般需要na.rm=T, 而subset函数可以自动省去
+#如果想去掉有NA值所在的观测行，可以使用complete.case函数
+exama
+  exam1 exam2 quiz V4
+1   2.0   3.3  4.0 NA
+2    NA   2.0  3.7 NA
+3   4.0    NA  4.0 NA
+4   2.3   0.0  3.3 NA
+5   2.3   1.0   NA NA
+6    NA   3.7  4.0 NA
+complete.cases(exama)
+[1] FALSE FALSE FALSE FALSE FALSE FALSE
+examb<-exama[complete.cases(exama)]
+examb
+data frame with 0 columns and 6 rows
+
+exama[complete.cases(exama[,2:3]),]#局部过滤
+  exam1 exam2 quiz
+1   2.0   3.3  4.0
+2    NA   2.0  3.7
+4   2.3   0.0  3.3
+6   3.3   3.7  4.0
+
+exam<-cbind(exam,exam$exam1-exam$exam2) #捆绑新数据框
+exam
+  exam1 exam2 quiz exam$exam1 - exam$exam2
+1   2.0   3.3  4.0                    -1.3
+2   3.3   2.0  3.7                     1.3
+3   4.0   4.0  4.0                     0.0
+4   2.3   0.0  3.3                     2.3
+5   2.3   1.0  3.3                     1.3
+6   3.3   3.7  4.0                    -0.4
+exam<-rbind(exam,list(3.5,3.8,4.0,-0.3))
+> exam
+  exam1 exam2 quiz exam$exam1 - exam$exam2
+1   2.0   3.3  4.0                    -1.3
+2   3.3   2.0  3.7                     1.3
+3   4.0   4.0  4.0                     0.0
+4   2.3   0.0  3.3                     2.3
+5   2.3   1.0  3.3                     1.3
+6   3.3   3.7  4.0                    -0.4
+7   3.5   3.8  4.0                    -0.3
+
+
