@@ -104,4 +104,12 @@ exam<-rbind(exam,list(3.5,3.8,4.0,-0.3))
 6   3.3   3.7  4.0                    -0.4
 7   3.5   3.8  4.0                    -0.3
 
-
+#数据简单预处理
+data<-as.data.frame(read.table("heatmap.txt",header = T,sep="\t"))
+data<-data[complete.cases(data),] #去掉NA
+data<-data[data$C2>2,]
+data<-data[data$P1>5,]#去掉C2列<=2, P1列<=5的行
+data$C与P比例<-(data$C1+data$C2+data$C3)/(data$P1+data$P2+data$P3)#增加一列C与P的比值
+k<-median(data$C与P比例)#找到C与P比例列的中位数
+c<-data[grep("c1",data),]#提取含有c1的行
+d<-data[,2,drop=FALSE]#提取c1列，并保持数据框格式
