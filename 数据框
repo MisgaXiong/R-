@@ -113,3 +113,22 @@ data$C与P比例<-(data$C1+data$C2+data$C3)/(data$P1+data$P2+data$P3)#增加一�
 k<-median(data$C与P比例)#找到C与P比例列的中位数
 c<-data[grep("c1",data),]#提取含有c1的行
 d<-data[,2,drop=FALSE]#提取c1列，并保持数据框格式
+
+d1
+      kid place
+1    jack    CA
+2    jill    MA
+3 jillian    MA
+4    john    HI
+d2
+  age    name
+1  12    jill
+2  10 jillian
+3   7    john
+4  15    jack
+merge(d1,d2,by.x="kid",by.y="name") #合并两个数据框，kid和name的内容一样，可以使用by.x= ,by.y=
+      kid place age
+1    jack    CA  15
+2    jill    MA  12
+3 jillian    MA  10
+4    john    HI   7
