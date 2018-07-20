@@ -1,0 +1,12 @@
+#统计H5N8关键位点氨基酸突变情况的脚本
+c<-grep("Qinghai",b)
+G<-list()
+k<-list()
+for(i in 2:49){
+  b<-mytable[,i]
+  b<-as.vector(b)
+  G[[i]]<-b[1]
+  for(n in 1:length(b)){
+    if(b[n]!=b[1]){G[[i]]<-c(G[[i]],n,b[n])}
+  }
+}
